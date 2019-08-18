@@ -41,3 +41,5 @@ StormData$CROPDMG <- StormData$CROPDMG * StormData$CROPDMGEXP
 glimpse(StormData)
 ```
 
+2. **Data Analysis**
+
