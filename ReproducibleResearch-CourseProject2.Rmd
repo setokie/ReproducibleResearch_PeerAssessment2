@@ -1,0 +1,43 @@
+---
+title: 'Reproducible Research : Course Project 2'
+author: "Nur Seto Dimas"
+date: "18 August 2019"
+output: 
+  html_document: 
+    keep_md: yes
+    theme: lumen
+---
+
+## Synopsis
+Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
+
+This project involves exploring the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to explain the impact of  weather events towards public health and the economy.
+
+## Data Analysis
+1. **Import & Tidy**
+The data set for the analysis was obtained from U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database.
+
+***Data Cleaning Notes***
+* Transformed PROPDMGEXP and CROPDMGEXP into numeric character.
+* Multiplied PROPDMG to PROPDMGEXP and CROPDMG to CROPDMGEXP.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+
+# 1. Importing the data set
+StormData <- read.csv("StormData.csv.bz2")
+
+# 2. Tidying data set
+StormData$PROPDMGEXP <- as.numeric(ifelse(StormData$PROPDMGEXP == "K", 1000, 
+                                          ifelse(StormData$PROPDMGEXP == "M", 1000000, 1000000000)))
+StormData$PROPDMG <- StormData$PROPDMG * StormData$PROPDMGEXP
+
+StormData$CROPDMGEXP <- as.numeric(ifelse(StormData$CROPDMGEXP == "K", 1000, 
+                                          ifelse(StormData$CROPDMGEXP == "M", 1000000, 1000000000)))
+StormData$CROPDMG <- StormData$CROPDMG * StormData$CROPDMGEXP
+
+# 3. View final data set
+glimpse(StormData)
+```
+
