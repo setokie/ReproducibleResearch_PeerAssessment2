@@ -1,5 +1,6 @@
 ---
-title: 'Reproducible Research : Course Project 2'
+title: 'NOAA Data Set Analysis'
+subtitle: 'Weather Events Impact on Human Casualties and Financial Damage'
 author: "Nur Seto Dimas"
 date: "18 August 2019"
 output: 
@@ -15,8 +16,8 @@ Storms and other severe weather events can cause both public health and economic
 
 This project involves exploring the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to explain the impact of  weather events towards public health and the economy.
 
-# Data Analysis
-## **Import & Tidy**  
+# Data Processing  
+**Importing Data**  
 The data set for the analysis was obtained from U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database.  
 
 **Data Cleaning Notes**  
@@ -44,7 +45,8 @@ StormData$CROPDMG <- StormData$CROPDMG * StormData$CROPDMGEXP
 ```
 
 
-## **Weather Events vs Population Health**  
+# Result  
+## **Weather Events Impact on Population Health**  
 **Analysis Steps**  
 * Grouped NOAA data set by EVTYPE variable into new data set.  
 * Summaries total number of FATALITIES and INJURIES and sort descending from that two variables.  
@@ -74,9 +76,9 @@ ggplot(data = casualties_top5, aes(x = EVTYPE, y = values, fill = total, label =
 
 
 **Insight**  
-Tornado is the most fatal weather event in United States, with the highest number in fatalities and injuries casualties.
+Tornado is the most dangerous weather event in United States, with the highest number in fatalities and injuries.
 
-## **Weather Events vs Economic Loss**
+## **Weather Events Impact on Economy**
 **Analysis Steps**  
 * Grouped NOAA data set by EVTYPE variable into three data sets.  
 * Summaries and sort each data set.  
@@ -126,28 +128,6 @@ ggplot(data = CropDamage, aes(x = EVTYPE, y = Crop.Damage,
 
 ```
 
-***By Total Financial Damage***
-```{r Total Damage, echo=TRUE, message=FALSE, warning=FALSE}
-FinancialDamage <- StormData %>%
-        group_by(EVTYPE) %>%
-        summarise(Financial.Damage = sum(PROPDMG) + sum(CROPDMG)) %>%
-        arrange(desc(Financial.Damage))
-FinancialDamage <- head(FinancialDamage, 5)
-
-ggplot(data = FinancialDamage, aes(x = EVTYPE, y = Financial.Damage, 
-                              label = paste0(format(round(Financial.Damage / 1e6), 
-                                                    trim = TRUE, big.mark = ","), "M"))) +
-        geom_col(position = "dodge", fill = "steelblue") + 
-        ggtitle("Top 5 Weather Event's Financial Damage in United States from 1950 to 2011") +
-        xlab("Weather Event") +
-        ylab("Financial Loss (in USD)") + 
-        theme(plot.title = element_text(size = 12, hjust = 0.5)) +
-        scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-9)) + 
-        geom_label(color = "Dark Gray")
-```
-
-
 **Insight**  
 * Biggest financial loss in property damage caused by flood.  
 * Crop damage from drought is the highest.  
-* The most devastating weather event that cause major financial loss is flood.
