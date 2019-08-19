@@ -80,7 +80,7 @@ Tornado is the most dangerous weather event in United States, with the highest n
 
 ## **Weather Events Impact on Economy**
 **Analysis Steps**  
-* Grouped NOAA data set by EVTYPE variable into three data sets.  
+* Grouped NOAA data set by EVTYPE variable into two data sets.  
 * Summaries and sort each data set.  
 * Select the top 5 EVTYPE for each data set.  
 * Plot the data sets.  
