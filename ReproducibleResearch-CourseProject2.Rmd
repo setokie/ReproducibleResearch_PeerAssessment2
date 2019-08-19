@@ -32,11 +32,13 @@ StormData <- read.csv("StormData.csv.bz2")
 
 # 2. Tidying data set
 StormData$PROPDMGEXP <- as.numeric(ifelse(StormData$PROPDMGEXP == "K", 1000, 
-                                          ifelse(StormData$PROPDMGEXP == "M", 1000000, 1000000000)))
+                                          ifelse(StormData$PROPDMGEXP == "M", 1000000,
+                                                 ifelse(StormData$PROPDMGEXP == "B", 1000000000, 0))))
 StormData$PROPDMG <- StormData$PROPDMG * StormData$PROPDMGEXP
 
 StormData$CROPDMGEXP <- as.numeric(ifelse(StormData$CROPDMGEXP == "K", 1000, 
-                                          ifelse(StormData$CROPDMGEXP == "M", 1000000, 1000000000)))
+                                          ifelse(StormData$CROPDMGEXP == "M", 1000000,
+                                                 ifelse(StormData$CROPDMGEXP == "B", 1000000000, 0))))
 StormData$CROPDMG <- StormData$CROPDMG * StormData$CROPDMGEXP
 
 ```
